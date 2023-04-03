@@ -20,6 +20,7 @@ use App\Http\Controllers\CategoryController;
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UserController::class, 'Logout']);
     Route::get('/user', [UserController::class, 'index']);
+    Route::get('/auth', [UserController::class, 'auth']);
     Route::delete('/UserDelete/{id}', [UserController::class, 'destroy']);
 
     // crud

@@ -1,11 +1,12 @@
 import { Link, Navigate, useNavigate } from "react-router-dom"
 import axiosClient from "../../tools/axios.client"
 import { useStateContext } from "../../tools/ContextProvider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function AuthNav(){
     const navigate= useNavigate();
     const {user, setUser, setToken}= useStateContext();
+    const [data, setData]= useState()
     const onLogout= (ev)=>{
         ev.preventDefault()
 
@@ -20,6 +21,22 @@ export default function AuthNav(){
 
 
 
+    }
+
+    useEffect(()=>{
+        fetchData()
+    },[])
+
+    const fetchData=()=>{
+        axiosClient.get('/auth')
+        .then(({data})=>{
+            data.map((e)=>{
+                e.map((e)=>{
+                    setData(e.name)
+                    console.log(e)
+                })
+            })
+        })
     }
 
     return(
@@ -45,7 +62,7 @@ export default function AuthNav(){
         </ul>
       <div className="navbar-nav">
         <div className="nav-item">
-        <p className="text-white mb-0 mt-2 mx-4">Wellcome, <em>{user.name}</em></p>
+        <p className="text-white mb-0 mt-2 mx-4">Wellcome, <em>{data}</em></p>
         </div>
         <form onSubmit={onLogout}>
         <button className="dropdown-item nav-link text-white bg-primary" type="submit">Logout</button>

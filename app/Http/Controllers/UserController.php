@@ -66,4 +66,10 @@ class UserController extends Controller
 
         $data->delete();
     }
+
+    public function auth(){
+        return response()->json([
+            User::where('id', auth()->user()->id)->get()
+        ]);
+    }
 }
